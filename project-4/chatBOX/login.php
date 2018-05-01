@@ -11,16 +11,61 @@
     <!-- All the files that are required -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/background.js"></script>
 </head>
 <body>
 
 <!-- Where all the magic happens -->
+<?php
+
+session_start();
+
+if (!empty($_SESSION['client'])) {	//If the client already has a session, direct them to the group page.
+	header("Location: groups.php");
+}
+
+//Verify the user posted correct username/password
+
+include 'db/db-config.php';
+include 'includes/auto-inc.php';
+
+$PDOAdapter = DatabaseAdapterFactory::create('PDO', array(DBCONNECTION, DBUSER, DBPASS));
+$domainControl = new DomainLayerCollections($PDOAdapter);
+
+//User entered a username and password
+if (!empty($_POST['lg_username']) && !empty($_POST['lg_password'])) {
+	$client = $domainControl->findExistingUser("Email", $_POST['lg_username']);
+	if (sizeof($client) > 0) {	// If the user existed in the database.
+		if ($client->Email == $_POST['lg_username']) {
+			if ($client->Password == $_POST['lg_password']) {
+				if (!empty($POST_['lg_remember'])) {	// If they checked to remember.
+					$_SESSION['client'] = $client;
+				}
+				header("Location: groups.php");
+			}
+			else {
+				error("Password does not match this user. Please try again");
+			}
+		}
+		else {
+			error("Invalid email address. Please try again");
+		}
+	}
+	
+}
+
+
+?>
 <!-- LOGIN FORM -->
 <div class="text-center">
 	<!-- Main Form -->
 	<div class="login-form-1">
     	<div class="logo">login</div>
-		<form id="login-form" class="text-left">
+		<form id="login-form" class="text-left" method="POST">
 			<div class="login-form-main-message"></div>
 			<div class="main-login-form">
 				<div class="login-group">
@@ -44,6 +89,30 @@
 				<p>new user? <a href="#">create new account</a></p>
 			</div>
 		</form>
+		<script>
+		$("#login-form").validate( {
+			rules: {
+				lg_username: {
+					required: true,
+					email: true
+				},
+				lg_password: {
+					required: true
+				}
+			},
+			messages: {
+				lg_username: {
+					required: "<p style='color:red;font-size: 13px;font-weight: normal'>An email address is required.</p>",
+					email: "<p style='color:red;font-size: 13px;font-weight: normal'>You must enter a valid email address."
+						+
+						   "<br>EX: user@gmail.com</p>"
+				},
+				lg_password: {
+					required: "<p style='color:red;font-size: 13px;font-weight: normal'>You must enter a password.</p>"
+				}
+			}
+		});
+		</script>
 	</div>
 	<!-- end:Main Form -->
 </div>

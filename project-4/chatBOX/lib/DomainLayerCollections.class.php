@@ -19,6 +19,15 @@ class DomainLayerCollections {
         return $this->userCollection;
     }
 
+    public function findExistingUser($email, $username) {
+        $WHERE = $email . " = '" . $username . "'";
+        $user = $this->userGate->findBy($WHERE);
+        if (sizeof($user) > 0) {
+            return $user[0];
+        }
+        return array();
+    }
+
     public function insertUser($user) {
         $this->userGate->insertUser($user);
     }

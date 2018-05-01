@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/background.js"></script>
 </head>
 <body>
 
@@ -21,35 +25,32 @@
 include 'db/db-config.php';
 include 'includes/auto-inc.php';
 
-function error($string) {
-	echo "<div class='alert alert-danger'>" . $string . "</div>";
-}
-
 $PDOAdapter = DatabaseAdapterFactory::create('PDO', array(DBCONNECTION, DBUSER, DBPASS));
-$engine = new DomainLayerCollections($PDOAdapter);
+$DomainControl = new DomainLayerCollections($PDOAdapter);
 
-$valid = true;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$email = $pass = $name = null;
+	$valid = true;
 	if (!empty($_POST['reg_username']) && !empty($_POST['reg_password']) && !empty($_POST['reg_password_confirm']) && !empty($_POST['reg_fullname']) && !empty($_POST['reg_agree'])) {
+		$email = $pass = $name = null;
 
 		if ($_POST['reg_password'] != $_POST['reg_password_confirm']) {
 			$valid = false;
 		}
 
 		//Look for this email address in the database.
-		$dbUser = $engine->findAll();
+		$dbUser = $DomainControl->findAll();
 
 		foreach ($dbUser as $user) {
 			if ($user->Email == $_POST['reg_username']) {	// Name exists in the database already.
+				error("That email address is already in use.");
 				$valid = false;
 			}
 		}
-		 
 		if ($valid) {	//If all information was verified
 			$userInfo = array("Email" => $_POST['reg_username'], "Password" => $_POST['reg_password'], "Name" => $_POST['reg_fullname']);
 			$user = new User($userInfo);
-			$engine->insertUser($user);
+			$DomainControl->insertUser($user);
+			header('Location: login.php?registration=success');
 		}
 	}
 }

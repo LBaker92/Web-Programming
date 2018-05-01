@@ -1,6 +1,5 @@
 <?php
-
-include 'helper-functions.php';
+include "helper-functions.php";
 
 spl_autoload_register(function ($class) {
     $file = 'lib/' . $class . '.class.php';

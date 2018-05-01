@@ -23,7 +23,6 @@ class UserTableGateway extends TableDataGateway {
 	}
 
 	public function insertUser($user) {
-		var_dump($user);
 		$this->dbAdapter->insert($this->getTableName(), $user->getFieldValues());
 	}
 
