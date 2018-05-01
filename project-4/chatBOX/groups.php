@@ -32,9 +32,6 @@ session_start();
 
 if (!empty( $_SESSION['client'] )) {
 	$user = $_SESSION['client'];
-} else {
-	//display_error("No user logged in.");
-	header("Location: login.php");
 }
 
 ?>

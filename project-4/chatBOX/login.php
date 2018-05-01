@@ -42,18 +42,16 @@ if (!empty($_POST['lg_username']) && !empty($_POST['lg_password'])) {
 	if (sizeof($client) > 0) {	// If the user existed in the database.
 		if ($client->Email == $_POST['lg_username']) {
 			if ($client->Password == $_POST['lg_password']) {
-				if (!empty($POST_['lg_remember'])) {	// If they checked to remember.
-					$_SESSION['client'] = $client;
-				}
-				header("Location: groups.php");
+				$_SESSION['client'] = $client;
+				header('Location: groups.php');
 			}
 			else {
 				error("Password does not match this user. Please try again");
 			}
 		}
-		else {
-			error("Invalid email address. Please try again");
-		}
+	}
+	else {
+		error("No account linked to that email.");
 	}
 	
 }
@@ -85,8 +83,8 @@ if (!empty($_POST['lg_username']) && !empty($_POST['lg_password'])) {
 				<button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
 			</div>
 			<div class="etc-login-form">
-				<p>forgot your password? <a href="#">click here</a></p>
-				<p>new user? <a href="#">create new account</a></p>
+				<p>forgot your password? <a href="forgot_password.php">click here</a></p>
+				<p>new user? <a href="registration.php">create new account</a></p>
 			</div>
 		</form>
 		<script>
