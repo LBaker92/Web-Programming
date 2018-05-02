@@ -54,7 +54,7 @@ else {
 					// Pull all groups from gateway with href to index.php and their groupid
 					foreach ($groups as $group) {
 						?>
-						<li><a href="<?= $group->Link ?>"><?= $group->Title ?></a></li>
+						<li><a href="<?= $group->Link ?>&user=<?= $user->Email ?>"><?= $group->Title ?></a></li>
 						<?php
 					}
 				?>

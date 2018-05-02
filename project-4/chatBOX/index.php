@@ -15,7 +15,9 @@
 	<!-- jQuery UI -->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/background.js"></script>
+    <script type="text/javascript" src="js/background.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="js/chat.js"></script>
 </head>
 <body>
 <?php
@@ -36,23 +38,69 @@ else {
 }
 
 ?>
-<div class="container">
-	<div class="row text-center">
-		<div class="chatbox-main-style">
-			<h2>ChatBOX</h2>
-            <h4>You are in: <b><?= $_GET['chatroom'] ?></b></h4>
-			<h5>Logged in as: <a href="#"><?=$user->Email?></a></h5>
-		</div>
-    </div>
-    <br>
-    <div class="row text-left">
-        <div id="chat-box">
-        <p>TEST</p>
+
+<script>
+  // kick off chat
+  var chat =  new Chat();
+
+  $(function() {
+  
+     chat.getState(); 
+     
+     // watch textarea for key presses
+     $("#sendie").keydown(function(event) {  
+     
+         var key = event.which;  
+   
+         //all keys including return.  
+         if (key >= 33) {
+           
+             var maxLength = $(this).attr("maxlength");  
+             var length = this.value.length;  
+             
+             // don't allow new content if length is maxed out
+             if (length >= maxLength) {  
+                 event.preventDefault();  
+             }  
+         }  
+                                                                                                     });
+     // watch textarea for release of key press
+     $('#sendie').keyup(function(e) {  
+                
+        if (e.keyCode == 13) { 
+        
+              var text = $(this).val();
+              var maxLength = $(this).attr("maxlength");  
+              var length = text.length; 
+               
+              // send 
+              if (length <= maxLength + 1) { 
+                chat.send(text);
+                $(this).val("");
+              } else {
+                $(this).val(text.substring(0, maxLength));
+              }  
+        }
+     });
+  });
+</script>
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <h2>Welcome to ChatBOX</h2>
+            <p>You are chatting in: <b> <?= $_GET['chatroom'] ?> </b></p>
+            <p id="name-area">You are logged in as: <b> <?= $user->Email ?> </b></p>
+            <div id="chat-wrap">
+                <div id="chat-area">
+
+                </div>
+            </div>
+            <form id="send-message-area">
+                <p>Your message: </p>
+                <textarea id="sendie" maxlength = '100'></textarea>
+            </form>
         </div>
-        <form id ="chat-form" method="POST">
-        <textarea id="chat-box-text" maxlength="255" placeholder="Start typing here..."></textarea>
-        <button id ="chat-enter" type="submit" class="login-button">Enter</button>
-        </form>
     </div>
 </div>
 </body>

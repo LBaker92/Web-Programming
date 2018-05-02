@@ -290,34 +290,3 @@ label:hover:before {
   color: #aaaaaa;
   font-weight: bold;
 }
-
-#chat-box {
-  background: rgba(255, 255, 255, 0.3);
-  padding: 10px 0 0 10px;
-  margin: 0 auto;
-  width: 500px;
-  height: 500px;
-  border: 1px solid black;
-}
-
-#chat-box-text {
-  background: rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  margin: 0 0 0 0;
-  height: 75px;
-  width: 500px;
-  border: 1px solid black;
-  border-top: 0;
-}
-
-#chat-form {
-  margin: 0 auto;
-  width: 500px;
-  height: 100px;
-}
-
-#chat-enter {
-  margin: 0 200px;
-  height: 50px;
-  width: 100px;
-}
