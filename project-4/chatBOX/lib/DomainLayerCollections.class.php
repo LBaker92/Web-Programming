@@ -2,19 +2,18 @@
 class DomainLayerCollections {
     private $connection = null;
     private $userGate = null;
+    private $groupGate = null;
+
     private $userCollection = array();
+    private $groupCollection = array();
 
     function __construct($DBAdapter) {
         $this->connection = $DBAdapter;
         $this->userGate = new UserTableGateway($this->connection);
+        $this->groupGate = new GroupTableGateway($this->connection);
     }
 
-    // public function findById($param) {
-    //     $this->userCollection = $this->userGate->findById($param);
-    //     return $this->userCollection;
-    // }
-
-    public function findAll() {
+    public function findAllUsers() {
         $this->userCollection = $this->userGate->findAll();
         return $this->userCollection;
     }
@@ -30,6 +29,24 @@ class DomainLayerCollections {
 
     public function insertUser($user) {
         $this->userGate->insertUser($user);
+    }
+
+    public function findAllGroups() {
+        $this->groupCollection = $this->groupGate->findAll();
+        return $this->groupCollection;
+    }
+
+    public function findExistingGroup($title, $roomToJoin) {
+        $WHERE = $title . " = '" . $roomToJoin . "'";
+        $user = $this->groupGate->findBy($WHERE);
+        if (sizeof($group) > 0) {
+            return $group[0];
+        }
+        return array();
+    }
+
+    public function insertGroup($group) {
+        $this->groupGate->insertGroup($group);
     }
 }
 

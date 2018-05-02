@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 
 		//Look for this email address in the database.
-		$dbUser = $DomainControl->findAll();
+		$dbUser = $DomainControl->findAllUsers();
 
 		foreach ($dbUser as $user) {
 			if ($user->Email == $_POST['reg_username']) {	// Name exists in the database already.
