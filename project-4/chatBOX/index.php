@@ -36,75 +36,24 @@ else {
 }
 
 ?>
-<div class="container-fluid">
-<a href="login.php?logout=logout"<button type="button" class="btn btn-primary">Logout</button></a>
-    <div class="row text-center">
-        <div class="chatbox-main-style">
-
-            <h2>ChatBOX</h2>
-            
-            <!--<div class="row">-->
-                <p class="display-name-p">You are: <a href="#">@<?=$user->name?></a></p>
-                <p>[Group: <a href="groups.php">@<?=$group->name?></a>]</p>
-            <!--</div>-->
-        
-        </div>
+<div class="container">
+	<div class="row text-center">
+		<div class="chatbox-main-style">
+			<h2>ChatBOX</h2>
+            <h4>You are in: <b><?= $_GET['chatroom'] ?></b></h4>
+			<h5>Logged in as: <a href="#"><?=$user->Email?></a></h5>
+		</div>
     </div>
-
-    <div class="row">
-            
-        <div id="auto-box" class="col-md-3" style="">
+    <br>
+    <div class="row text-left">
+        <div id="chat-box">
+        <p>TEST</p>
         </div>
-        
-        <div class="col-md-6">
-        
-            <div id="message-container" class="container-fluid message-area-index">
-                <!--<?php
-                //for ($i = 0; $i < 30; ++ $i) {
-                ?>
-                
-                <div class="container-fluid individual-message-box">
-                    <p class="individual-name">@Username </p>
-                    <p class="individual-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                
-                <?php
-                //}
-                ?>-->
-            </div>
-
-        </div>
-                
-        <div class="col-md-3">
-        </div>
-            
+        <form id ="chat-form" method="POST">
+        <textarea id="chat-box-text" maxlength="255" placeholder="Start typing here..."></textarea>
+        <button id ="chat-enter" type="submit" class="login-button">Enter</button>
+        </form>
     </div>
-
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        
-        <div class="col-md-6 ui-widget">
-            <!--<form id="send-message-area">-->
-                <textarea  id="actual-text-box" class="textarea-index form-control" maxlength='300'></textarea>
-                <!--<div class="pull-right" style="">
-                
-                    <!--<input class="chatbox-send-button" type="submit" value="Send">-->
-                    
-                    <!--<label for="file-upload" class="custom-file-upload">
-                        <span id="file-label" class="glyphicon glyphicon-paperclip"></span>
-                    </label>-->
-                <!--</div>
-                
-                <input id="file-upload" class="" type="file" value="Attach">
-                
-            </form>-->
-        </div>
-        
-        <div class="col-md-3">
-        </div>
-    </div>
-
 </div>
 </body>
 </html>
