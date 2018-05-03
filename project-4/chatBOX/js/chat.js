@@ -23,16 +23,26 @@ function getStateOfChat() {
 			},
 			dataType: "json",
 			success: function (data) {
-				console.log("STATE: SUCCESS");
-				for (var i = 0; i < size(data); ++i) {
-					console.log(data[i]);
-				}
+				//console.log("RETRIEVE: SUCCESS");
+				updateChat(data);
 			},
 			error: function () {
-				console.log("STATE: FAIL");
+				//console.log("RETRIEVE: FAIL");
 			}
 		});
 	}
+}
+
+function updateChat(data) {
+	var mainMessagingBox = document.getElementById("chat-area");
+	mainMessagingBox.innerHTML = "";
+	//console.log(data);
+	data.forEach(function(message) {
+		//console.log(message);
+		mainMessagingBox.innerHTML += "<b>" + message["User"] + "</b>: " + message["Message"] + "<br>";
+	});
+
+	document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;
 }
 
 //send the message
@@ -40,25 +50,24 @@ function sendChat(message) {
 	getStateOfChat();
 	$.ajax({
 		type: "POST",
-		url: "../chatBOX/messaging/sendMessage.php",
+		url: "messaging/sendMessage.php",
 		data: {
 			'chatroom': getParameterByName("chatroom"),
 			'user': getParameterByName("user"),
 			'message': message
 		},
-		dataType: "json",
 		success: function (data) {
-			for (var i = 0; i < size(data); ++i) {
-				console.log(data[i]);
-			}
+			//console.log("SEND: SUCCESS");
+			getStateOfChat();
 		},
 		error: function () {
-			console.log("STATE:FAIL");
+			//console.log("SEND: FAIL");
 		}
 	});
 }
 
 function Chat() {
+	this.update = updateChat;
 	this.send = sendChat;
 	this.getState = getStateOfChat;
 }

@@ -17,7 +17,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/background.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="js/chat.js"></script>
+    <script src="js/chat.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="js/Dictionary.js"></script>
 </head>
 <body>
 <?php
@@ -38,6 +41,26 @@ else {
 }
 
 ?>
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <h2>Welcome to ChatBOX</h2>
+            <p>You are chatting in: <b> <?= $_GET['chatroom'] ?> </b></p>
+            <p id="name-area">You are logged in as: <b> <?= $user->Email ?> </b></p>
+            <div id="chat-wrap">
+                <div id="chat-area">
+
+                </div>
+            </div>
+            <form id="send-message-area">
+                <textarea id="sendie" maxlength = "300" placeholder="Enter text here"></textarea>
+
+            </form>
+            <!-- <textarea id="auto-example" placeholder="Test auto completion here."></textarea> -->
+        </div>
+    </div>
+</div>
 
 <script>
   // kick off chat
@@ -85,23 +108,10 @@ else {
   });
 </script>
 
-<div class="container-fluid">
-    <div class="row text-center">
-        <div class="col-lg-12">
-            <h2>Welcome to ChatBOX</h2>
-            <p>You are chatting in: <b> <?= $_GET['chatroom'] ?> </b></p>
-            <p id="name-area">You are logged in as: <b> <?= $user->Email ?> </b></p>
-            <div id="chat-wrap">
-                <div id="chat-area">
-
-                </div>
-            </div>
-            <form id="send-message-area">
-                <p>Your message: </p>
-                <textarea id="sendie" maxlength = '100'></textarea>
-            </form>
-        </div>
-    </div>
-</div>
+<script>
+$("#sendie").autocomplete({
+    source: dictionary
+});
+</script>
 </body>
 </html>
