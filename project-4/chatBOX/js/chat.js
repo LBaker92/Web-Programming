@@ -39,7 +39,7 @@ function updateChat(data) {
 	//console.log(data);
 	data.forEach(function(message) {
 		//console.log(message);
-		mainMessagingBox.innerHTML += "<b>" + message["User"] + "</b>: " + message["Message"] + "<br>";
+		mainMessagingBox.innerHTML += "[" + message["Time"] + "] <b>" + message["User"] + "</b>: " + message["Message"] + "<br>";
 	});
 
 	document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;

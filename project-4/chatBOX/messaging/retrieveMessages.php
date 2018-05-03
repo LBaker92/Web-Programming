@@ -13,7 +13,9 @@ $messages = $domainControl->findAllMessages("Chatroom", $chatroom);
 
 $messageArray = array();
 for ($i = 0; $i < sizeof($messages); ++$i) {
-    $messageArray[$i] = array("User" => $messages[$i]->User, "Message" => $messages[$i]->Message);
+    $date = new DateTime($messages[$i]->Time);
+    $date->format('h:i:s');
+    $messageArray[$i] = array("User" => $messages[$i]->User, "Message" => $messages[$i]->Message, "Time" => $date->format('g:i A'));
     // echo "<b>" . $messages[$i]->User . "</b>:" . $messages[$i]->Message;
     // echo "<br>";
 }

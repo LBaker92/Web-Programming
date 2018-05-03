@@ -107,11 +107,5 @@ else {
      });
   });
 </script>
-
-<script>
-$("#sendie").autocomplete({
-    source: dictionary
-});
-</script>
 </body>
 </html>

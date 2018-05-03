@@ -302,8 +302,16 @@ label:hover:before {
   border: 1px solid black;
 }
 
-#send-message-area, #sendie {
-  margin: 10px auto 0 auto;
+#send-message-area {
+  margin: -1px auto;
   width: 500px;
   height: 100px;
+}
+
+#sendie {
+  margin: 0 auto;
+  padding: 5px;
+  width: 500px;
+  height: 100px;
+  border: 1px solid black;
 }
